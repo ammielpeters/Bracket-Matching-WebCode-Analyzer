@@ -1,0 +1,5 @@
+--- Bracket Analysis Report ---
+Round Brackets (): 2 pairs -> INSUFFICIENT
+Curly Braces {}: 4 pairs -> INSUFFICIENT
+Angle Brackets <>: 10 pairs -> MODERATE
+ All bracket types are properly balanced.
