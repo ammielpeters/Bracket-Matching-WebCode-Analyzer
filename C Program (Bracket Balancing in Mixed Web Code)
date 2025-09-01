@@ -1,0 +1,51 @@
+#include <stdio.h>
+#include <string.h>
+
+#define MAX 10000
+
+// Function to classify sufficiency
+const char* classify(int pairs) {
+    if (pairs < 5) return "INSUFFICIENT";
+    else if (pairs <= 10) return "MODERATE";
+    else return "SUFFICIENT";
+}
+
+int main() {
+    char ch;
+    int roundOpen = 0, roundClose = 0;
+    int curlyOpen = 0, curlyClose = 0;
+    int angleOpen = 0, angleClose = 0;
+
+    printf("Enter mixed HTML/CSS/JS code (end with #):\n");
+
+    while ((ch = getchar()) != '#') {
+        if (ch == '(') roundOpen++;
+        else if (ch == ')') roundClose++;
+        else if (ch == '{') curlyOpen++;
+        else if (ch == '}') curlyClose++;
+        else if (ch == '<') angleOpen++;
+        else if (ch == '>') angleClose++;
+    }
+
+    int roundPairs = (roundOpen < roundClose) ? roundOpen : roundClose;
+    int curlyPairs = (curlyOpen < curlyClose) ? curlyOpen : curlyClose;
+    int anglePairs = (angleOpen < angleClose) ? angleOpen : angleClose;
+
+    printf("\n--- Bracket Analysis Report ---\n");
+    printf("Round Brackets (): %d pairs -> %s\n", roundPairs, classify(roundPairs));
+    printf("Curly Braces {}: %d pairs -> %s\n", curlyPairs, classify(curlyPairs));
+    printf("Angle Brackets <>: %d pairs -> %s\n", anglePairs, classify(anglePairs));
+
+    // Check balance
+    if (roundOpen != roundClose)
+        printf("⚠ WARNING: Round brackets () are unbalanced!\n");
+    if (curlyOpen != curlyClose)
+        printf("⚠ WARNING: Curly braces {} are unbalanced!\n");
+    if (angleOpen != angleClose)
+        printf("⚠ WARNING: Angle brackets <> are unbalanced!\n");
+
+    if (roundOpen == roundClose && curlyOpen == curlyClose && angleOpen == angleClose)
+        printf("\n All bracket types are properly balanced.\n");
+
+    return 0;
+}
